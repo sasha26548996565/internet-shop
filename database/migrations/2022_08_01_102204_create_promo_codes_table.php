@@ -6,26 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('property_products', function (Blueprint $table) {
+        Schema::create('promo_codes', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedInteger('promo_code');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('property_products');
+        Schema::dropIfExists('promo_codes');
     }
 };

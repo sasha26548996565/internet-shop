@@ -8,13 +8,11 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('property_product', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('email');
-            $table->string('subject');
-            $table->text('message');
+            $table->foreignId('property_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -22,6 +20,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('property_products');
     }
 };
