@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('promo_code_options', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
+            $table->unsignedInteger('discount');
             $table->foreignId('promo_code_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
