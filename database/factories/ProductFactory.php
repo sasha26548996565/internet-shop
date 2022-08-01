@@ -17,6 +17,7 @@ class ProductFactory extends Factory
             'slug' => $this->faker->word,
             'price' => $this->faker->randomFloat(2),
             'image' => 'null.jpg',
+            'description' => $this->faker->text,
             'category_id' => Category::get()->random()->id,
         ];
     }

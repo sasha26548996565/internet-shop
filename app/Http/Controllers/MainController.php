@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 
 class MainController extends Controller
 {
     public function index(): View
     {
-        return view('index');
+        $newProducts = Product::with('category')->latest()->take(2)->get();
+        $categories = Category::latest()->get();
+        $latestProducts = Product::with('category')->latest()->take(5)->get();
+
+        return view('index', compact('newProducts', 'latestProducts', 'categories'));
     }
 }

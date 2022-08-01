@@ -4,46 +4,26 @@
 
     <section class="hero-section">
         <div class="hero-slider owl-carousel">
-            <div class="hs-item set-bg" data-setbg="img/bg.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-7 text-white">
-                            <span>New Arrivals</span>
-                            <h2>denim jackets</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo
-                                viverra maecenas accumsan lacus vel facilisis. </p>
-                            <a href="#" class="site-btn sb-line">DISCOVER</a>
-                            <a href="#" class="site-btn sb-white">ADD TO CART</a>
+            @foreach ($newProducts as $newProduct)
+                <div class="hs-item set-bg" data-setbg="img/bg.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-7 text-white">
+                                <span>{{ $newProduct->name }}</span>
+                                <h2>{{ $newProduct->category->name }}</h2>
+                                <p>{{ $newProduct->description }}</p>
+                                <a href="#" class="site-btn sb-line">DISCOVER</a>
+                                <a href="#" class="site-btn sb-white">ADD TO CART</a>
+                            </div>
+                        </div>
+                        <div class="offer-card text-white">
+                            <span>from</span>
+                            <h2>$29</h2>
+                            <p>SHOP NOW</p>
                         </div>
                     </div>
-                    <div class="offer-card text-white">
-                        <span>from</span>
-                        <h2>$29</h2>
-                        <p>SHOP NOW</p>
-                    </div>
                 </div>
-            </div>
-            <div class="hs-item set-bg" data-setbg="img/bg-2.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-7 text-white">
-                            <span>New Arrivals</span>
-                            <h2>denim jackets</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo
-                                viverra maecenas accumsan lacus vel facilisis. </p>
-                            <a href="#" class="site-btn sb-line">DISCOVER</a>
-                            <a href="#" class="site-btn sb-white">ADD TO CART</a>
-                        </div>
-                    </div>
-                    <div class="offer-card text-white">
-                        <span>from</span>
-                        <h2>$29</h2>
-                        <p>SHOP NOW</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="container">
             <div class="slide-num-holder" id="snh-1"></div>
@@ -94,72 +74,21 @@
                 <h2>LATEST PRODUCTS</h2>
             </div>
             <div class="product-slider owl-carousel">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/1.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                @foreach ($latestProducts as $latestProduct)
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="./img/product/1.jpg" alt="{{ $latestProduct->name }}">
+                            <div class="pi-links">
+                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>{{ $latestProduct->price }}</h6>
+                            <p>{{ $latestProduct->name }}</p>
                         </div>
                     </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <div class="tag-new">New</div>
-                        <img src="./img/product/2.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/3.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/4.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/6.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -174,14 +103,9 @@
                 <h2>BROWSE TOP SELLING PRODUCTS</h2>
             </div>
             <ul class="product-filter-menu">
-                <li><a href="#">TOPS</a></li>
-                <li><a href="#">JUMPSUITS</a></li>
-                <li><a href="#">LINGERIE</a></li>
-                <li><a href="#">JEANS</a></li>
-                <li><a href="#">DRESSES</a></li>
-                <li><a href="#">COATS</a></li>
-                <li><a href="#">JUMPERS</a></li>
-                <li><a href="#">LEGGINGS</a></li>
+                @foreach ($categories as $category)
+                    <li><a href="#">{{ $category->name }}</a></li>
+                @endforeach
             </ul>
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
