@@ -18,7 +18,17 @@
                     <div class="user-panel">
                         <div class="up-item">
                             <i class="flaticon-profile"></i>
-                            <a href="#">Sign</a> In or <a href="#">Create Account</a>
+                            @guest
+                                <a href="{{ route('login') }}">Sign</a> In or <a href="{{ route('register') }}">Create Account</a>
+                            @endguest
+
+                            @auth
+                                <form action="{{ route('logout') }}" method="POST" style="display: inline-block;">
+                                    @csrf
+
+                                    <input type="submit" class="btn btn-link link-dark" style="text-decoration: none;" value="logout">
+                                </form>
+                            @endauth
                         </div>
                         <div class="up-item">
                             <div class="shopping-card">
