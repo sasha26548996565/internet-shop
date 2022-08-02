@@ -18,7 +18,7 @@ class PropertyFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'slug' => $this->faker->word,
+            'slug' => $this->faker->word . rand(0, 100),
         ];
     }
 }

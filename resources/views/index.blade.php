@@ -104,7 +104,7 @@
             </div>
             <ul class="product-filter-menu">
                 @foreach ($categories as $category)
-                    <li><a href="#">{{ $category->name }}</a></li>
+                    <li><a href="{{ route('category', $category->slug) }}">{{ $category->name }}</a></li>
                 @endforeach
             </ul>
             <div class="row">

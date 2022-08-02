@@ -14,7 +14,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'slug' => $this->faker->word,
+            'slug' => $this->faker->word . rand(0, 100),
             'price' => $this->faker->randomFloat(2),
             'image' => 'null.jpg',
             'description' => $this->faker->text,

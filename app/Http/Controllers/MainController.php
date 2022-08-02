@@ -19,4 +19,11 @@ class MainController extends Controller
 
         return view('index', compact('newProducts', 'latestProducts', 'categories'));
     }
+
+    public function category(string $categorySlug): View
+    {
+        $category = Category::where('slug', $categorySlug)->latest()->first();
+
+        return view('category', compact('category'));
+    }
 }
