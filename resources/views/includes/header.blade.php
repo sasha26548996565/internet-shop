@@ -5,7 +5,7 @@
                 <div class="col-lg-2 text-center text-lg-left">
                     <!-- logo -->
                     <a href="{{ route('index') }}" class="site-logo">
-                        <img src="img/logo.png" alt="">
+                        <img src="{{ asset('img/logo.png') }}" alt="">
                     </a>
                 </div>
                 <div class="col-xl-6 col-lg-5">
@@ -33,9 +33,11 @@
                         <div class="up-item">
                             <div class="shopping-card">
                                 <i class="flaticon-bag"></i>
-                                <span>0</span>
+                                <span id="totalQuantity">
+                                    {{ !is_null(session('cart_id')) ?
+                                        \Cart::session(session('cart_id'))->getTotalQuantity() : '0' }}</span>
                             </div>
-                            <a href="#">Shopping Cart</a>
+                            <a href="{{ route('cart.index') }}">Shopping Cart</a>
                         </div>
                     </div>
                 </div>

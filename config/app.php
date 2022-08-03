@@ -199,6 +199,8 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        Darryldecode\Cart\CartServiceProvider::class
+
     ],
 
     /*
@@ -214,6 +216,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
     ])->toArray(),
 
 ];

@@ -183,8 +183,8 @@ $(window).on('load', function() {
 		Quantity change
 	--------------------- */
     var proQty = $('.pro-qty');
-	proQty.prepend('<span class="dec qtybtn">-</span>');
-	proQty.append('<span class="inc qtybtn">+</span>');
+	// proQty.prepend('<span class="dec qtybtn">-</span>');
+	// proQty.append('<span class="inc qtybtn">+</span>');
 	proQty.on('click', '.qtybtn', function () {
 		var $button = $(this);
 		var oldValue = $button.parent().find('input').val();
@@ -194,8 +194,10 @@ $(window).on('load', function() {
 			// Don't allow decrementing below zero
 			if (oldValue > 0) {
 				var newVal = parseFloat(oldValue) - 1;
+                $(this).css('pointer-events', 'auto');
 			} else {
 				newVal = 0;
+                $(this).css('pointer-events', 'none');
 			}
 		}
 		$button.parent().find('input').val(newVal);

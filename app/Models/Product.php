@@ -21,4 +21,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Property::class, 'property_product', 'product_id', 'property_id')->withTimestamps();
     }
+
+    public function propertyOptions(): Relation
+    {
+        return $this->belongsToMany(PropertyOption::class, 'product_property_option', 'product_id', 'property_option_id')->withTimestamps();
+    }
 }

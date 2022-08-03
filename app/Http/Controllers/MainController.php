@@ -23,7 +23,8 @@ class MainController extends Controller
     public function category(string $categorySlug): View
     {
         $category = Category::where('slug', $categorySlug)->latest()->first();
+        $products = Product::with('category')->where('category_id', $category->id)->get();
 
-        return view('category', compact('category'));
+        return view('category', compact('category', 'products'));
     }
 }
