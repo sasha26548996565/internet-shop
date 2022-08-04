@@ -26,4 +26,9 @@ class Product extends Model
     {
         return $this->belongsToMany(PropertyOption::class, 'product_property_option', 'product_id', 'property_option_id')->withTimestamps();
     }
+
+    public function getPriceForCount(): float
+    {
+        return $this->price * $this->pivot->count;
+    }
 }

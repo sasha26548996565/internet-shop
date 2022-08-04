@@ -1,22 +1,22 @@
 @extends('layouts.master')
 
-@section('custom_js')
-    @include('includes.cartAjax.add', ['cartName' => '.addCart'])
-@endsection
-
 @section('content')
     <section class="hero-section">
         <div class="hero-slider owl-carousel">
-            @foreach ($newProducts as $newProduct)
+            @foreach ($newProducts as $product)
                 <div class="hs-item set-bg" data-setbg="img/bg.jpg">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-6 col-lg-7 text-white">
-                                <span>{{ $newProduct->name }}</span>
-                                <h2>{{ $newProduct->category->name }}</h2>
-                                <p>{{ $newProduct->description }}</p>
+                                <span>{{ $product->name }}</span>
+                                <h2>{{ $product->category->name }}</h2>
+                                <p>{{ $product->description }}</p>
                                 <a href="#" class="site-btn sb-line">DISCOVER</a>
-                                <a href="#" class="addCart site-btn sb-white" data-id="{{ $newProduct->id }}">ADD TO CART</a>
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="d-inline-block">
+                                    @csrf
+
+                                    <input type="submit" class="site-btn sb-white" value="ADD TO CART">
+                                </form>
                             </div>
                         </div>
                         <div class="offer-card text-white">

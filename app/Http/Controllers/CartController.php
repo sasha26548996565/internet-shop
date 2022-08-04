@@ -2,56 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller
 {
     public function index(): View
     {
-        $products = \Cart::session(session('cart_id'))->getContent();
+        $orderId = session('orderId');
 
-        return view('cart', compact('products'));
-    }
-
-    public function add(Request $request): Response
-    {
-        $product = Product::findOrFail($request->id);
-
-        if (is_null(session()->get('cart_id')))
+        if (!is_null($orderId))
         {
-            session(['cart_id' => uniqid()]);
+            $order = Order::findOrFail($orderId);
         }
 
-        \Cart::session(session('cart_id'))->add([
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => 1,
-            'attributes' => [
-                'image' => $product->image
-            ]
-        ]);
-
-        return response()->json(\Cart::getContent());
+        return view('cart', compact('order'));
     }
 
-    public function remove(Request $request): Response
+    public function add(Product $product): RedirectResponse
     {
-        $product = Product::findOrFail($request->id);
-        $quantity = \Cart::session(session('cart_id'))->get($product->id)->quantity;
+        $orderId = session('orderId');
 
-        if ($quantity <= 1)
+        if (is_null($orderId))
         {
-            \Cart::session(session('cart_id'))->remove($product->id);
+            $order = Order::create();
+            session(['orderId' => $order->id]);
         } else
         {
-            \Cart::session(session('cart_id'))->update($product->id, ['quantity' => -1]);
+            $order = Order::findOrFail($orderId);
         }
 
-        return response()->json(\Cart::getContent());
+        if ($order->products->contains($product->id))
+        {
+            $pivotRow = $order->products()->where('product_id', $product->id)->first()->pivot;
+            $pivotRow->count++;
+            $pivotRow->update();
+        } else
+        {
+            $order->products()->attach($product->id);
+        }
+
+        return to_route('cart.index', $order);
+    }
+
+    public function remove(Product $product): RedirectResponse
+    {
+        $orderId = session('orderId');
+
+        if (is_null($orderId))
+        {
+            return redirect()->back();
+        }
+
+        $order = Order::findOrFail($orderId);
+
+        if ($order->products->contains($product->id))
+        {
+            $pivotRow = $order->products()->where('product_id', $product->id)->first()->pivot;
+
+            if ($pivotRow->count <= 1)
+            {
+                $order->products()->detach($product->id);
+            } else
+            {
+                $pivotRow->count--;
+                $pivotRow->update();
+            }
+        }
+
+        return to_route('cart.index', $order);
     }
 }

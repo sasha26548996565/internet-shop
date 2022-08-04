@@ -2,88 +2,6 @@
 
 @section('title', 'cart')
 
-@section('custom_js')
-<script>
-
-jQuery(document).ready(function () {
-    let totalQuantity = parseInt(jQuery('#totalQuantity').text());
-    let totalSum = parseInt(jQuery('#totalSum').text());
-
-    jQuery(".addCart").click(function (event) {
-        event.preventDefault();
-
-        let id = jQuery(event.target).data('id');
-
-        addCart(id);
-    });
-
-    jQuery(".removeCart").click(function (event) {
-        event.preventDefault();
-
-        let id = jQuery(event.target).data('id');
-        let quantity = jQuery('#quantity').val();
-
-        removeCart(id);
-    });
-
-    function addCart(id)
-    {
-        jQuery.ajax({
-            url: "{{ route('cart.add') }}",
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: id
-            }
-        });
-
-        incrementTotalQuantity();
-
-        changeFullSum({{ \Cart::session(session('cart_id'))->get(1)->getPriceSum() }}, id);
-    }
-
-    function removeCart(id)
-    {
-        jQuery.ajax({
-            url: "{{ route('cart.remove') }}",
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: id
-            }
-        });
-
-        decrementTotalQuantity();
-
-        changeFullSum({{ \Cart::session(session('cart_id'))->get(1)->getPriceSum() }}, id);
-    }
-
-    function incrementTotalQuantity()
-    {
-        totalQuantity += 1;
-
-        jQuery('#totalQuantity').text(totalQuantity);
-    }
-
-    function changeFullSum(sum, id)
-    {
-        totalSum = sum;
-        console.log(jQuery('#totalSum').find("[data-id='" + id + "']"));
-
-        jQuery('#totalSum').find("[data-id='" + id + "']").text(totalSum);
-    }
-
-    function decrementTotalQuantity()
-    {
-        totalQuantity -= 1;
-
-        jQuery('#totalQuantity').text(totalQuantity);
-    }
-});
-
-</script>
-@endsection
-
 @section('content')
 	<!-- cart section end -->
 	<section class="cart-section spad">
@@ -103,7 +21,7 @@ jQuery(document).ready(function () {
 								</tr>
 							</thead>
 							<tbody>
-                                @foreach ($products as $product)
+                                @foreach ($order->products as $product)
                                     <tr>
                                         <td class="product-col">
                                             <img src="img/cart/1.jpg" alt="{{ $product->name }}">
@@ -114,31 +32,34 @@ jQuery(document).ready(function () {
                                         </td>
                                         <td class="quy-col">
                                             <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <span class="dec qtybtn removeCart" data-id="{{ $product->id }}">-</span>
-                                                    <input type="text" value="{{ $product->quantity }}" data-id="{{ $product->id }}" id="quantity">
-                                                    <span class="inc qtybtn addCart" data-id="{{ $product->id }}">+</span>
+                                                <div class="pro-qty d-flex">
+                                                    <form action="{{ route('cart.remove', $product->id) }}" method="POST">
+                                                        @csrf
+
+                                                        <input type="submit" value="-" class="dec" style="cursor: pointer;">
+                                                    </form>
+
+                                                    <input type="text" value="{{ $product->pivot->count }}" readonly>
+
+                                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                                        @csrf
+
+                                                        <input type="submit" value="+" class="inc" style="cursor: pointer;">
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="size-col">
-                                            @if (App\Models\Product::findOrFail($product->id)->propertyOptions->count() > 0)
-                                                @foreach (App\Models\Product::findOrFail($product->id)->propertyOptions as $propertyOption)
-                                                    <h4>{{ $propertyOption->property->name }}: {{ $propertyOption->name }}</h4>
-                                                @endforeach
-                                            @else
-                                                <h4>properties does not exists!</h4>
-                                            @endif
-
+                                            <h4>properties does not exists!</h4>
                                         </td>
-                                        <td class="total-col"><h4 id="totalSum" data-id="{{ $product->id }}">{{ $product->getPriceSum() }}</h4></td>
+                                        <td class="total-col"><h4 id="totalSum">{{ $product->getPriceForCount() }}$</h4></td>
                                     </tr>
                                 @endforeach
 							</tbody>
 						</table>
 						</div>
 						<div class="total-cost">
-							<h6>Total <span></span></h6>
+							<h6>Total <span>{{ $order->getTotalPrice() }}$</span></h6>
 						</div>
 					</div>
 				</div>

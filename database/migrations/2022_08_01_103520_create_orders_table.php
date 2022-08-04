@@ -11,11 +11,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->string('address');
-            $table->string('country');
-            $table->string('zipcode');
+            $table->string('address')->nullable();
+            $table->string('country')->nullable();
+            $table->string('zipcode')->nullable();
             $table->string('phone')->nullable();
-            $table->string('delievery');
+            $table->string('delievery')->nullable();
 
             $table->foreignId('promo_code_id')->nullable()->constrained()->onDelete('cascade');
 

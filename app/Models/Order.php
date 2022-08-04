@@ -14,11 +14,23 @@ class Order extends Model
 
     public function products(): Relation
     {
-        return $this->belongsToMany(Product::class, 'order_product', 'order_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'order_product', 'order_id', 'product_id')->withPivot('count')->withTimestamps();
     }
 
     public function promoCode(): Relation
     {
         return $this->belognsTo(PromoCode::class, 'promo_code_id', 'id');
+    }
+
+    public function getTotalPrice(): float
+    {
+        $price = 0;
+
+        foreach ($this->products as $product)
+        {
+            $price += $product->getPriceForCount();
+        }
+
+        return $price;
     }
 }

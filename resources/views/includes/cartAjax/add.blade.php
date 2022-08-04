@@ -1,7 +1,7 @@
 <script>
 
 jQuery(document).ready(function () {
-    jQuery(document).click("{{ $cartName }}", function (event) {
+    jQuery("{{ $cartName }}").click(function (event) {
         event.preventDefault();
 
         let id = jQuery(event.target).data('id');
@@ -18,8 +18,7 @@ jQuery(document).ready(function () {
                 id: id
             }
         });
-
-        incrementTotalQuantity();
+        incrementTotalQuantity()
     }
 
     function incrementTotalQuantity()
