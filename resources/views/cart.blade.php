@@ -42,11 +42,15 @@
 
                                                         <input type="text" value="{{ $product->pivot->count }}" readonly>
 
-                                                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                                            @csrf
+                                                        @if ($product->pivot->count >= $product->count)
+                                                            <input type="text" class="inc" value="+" readonly>
+                                                        @else
+                                                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                                                @csrf
 
-                                                            <input type="submit" value="+" class="inc" style="cursor: pointer;">
-                                                        </form>
+                                                                <input type="submit" value="+" class="inc" style="cursor: pointer;">
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </td>

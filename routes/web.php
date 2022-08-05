@@ -21,6 +21,10 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/', 'CheckoutController@index')->name('index');
         Route::post('/save/{order}', 'CheckoutController@save')->name('save');
     });
+
+    Route::middleware('auth')->prefix('like')->name('like.')->group(function () {
+        Route::post('/add/{user}/{product}', 'LikeController@add')->name('add');
+    });
 });
 
 Auth::routes();

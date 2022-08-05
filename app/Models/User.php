@@ -28,8 +28,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function likedPosts(): Relation
+    public function likedProducts(): Relation
     {
         return $this->belongsToMany(Product::class, 'product_user_likes', 'user_id', 'product_id')->withTimestamps();
+    }
+
+    public function hasLike(int $productId): bool
+    {
+        return $this->likedProducts->contains($productId);
     }
 }
