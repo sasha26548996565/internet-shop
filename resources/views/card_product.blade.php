@@ -10,12 +10,15 @@
 
         <img src="{{ asset('img/product/1.jpg') }}" alt="{{ $product->name }}">
         <div class="pi-links d-flex justify-content-around">
-            <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                @csrf
+            @if ($product->isAvailable())
+                <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                    @csrf
 
-                <button type="submit" style="padding:0; margin:0; border:0; background-color:transparent; cursor: pointer;"
-                    class="add-cart" value="ADD TO CART"><i class="flaticon-bag"></i></button>
-            </form>
+                    <button type="submit" style="padding:0; margin:0; border:0; background-color:transparent; cursor: pointer;"
+                        class="add-cart" value="ADD TO CART"><i class="flaticon-bag"></i></button>
+                </form>
+            @endif
+
             @auth
                 <form action="{{ route('like.add', [auth()->user()->id, $product->id]) }}" method="POST">
                     @csrf

@@ -27,7 +27,7 @@
                                             <td class="product-col">
                                                 <img src="img/cart/1.jpg" alt="{{ $product->name }}">
                                                 <div class="pc-title">
-                                                    <h4>{{ $product->name }} {{ $product->id }}</h4>
+                                                    <h4>{{ $product->name }}</h4>
                                                     <p>{{ $product->price }} $</p>
                                                 </div>
                                             </td>
@@ -69,15 +69,23 @@
 						</table>
 						</div>
 						<div class="total-cost">
-							<h6>Total <span>{{ $order->getTotalPrice() }}$</span></h6>
+							<h6>Total <span>{{ $order->promoCode ? $order->getTotalPriceWithPromoCode() : $order->getTotalPrice() }}$</span></h6>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-4 card-right">
-					<form class="promo-code-form">
-						<input type="text" placeholder="Enter promo code">
-						<button>Submit</button>
-					</form>
+                    @isset ($order->promoCode)
+                        <p>{{ $order->promoCode->promo_code }}</p>
+                    @else
+                        <form action="{{ route('cart.promo_code.add') }}" method="POST" class="promo-code-form">
+                            @csrf
+
+                            <input type="text" name="promo_code" placeholder="Enter promo code">
+                            @include('includes.error', ['fieldName' => 'promo_code'])
+
+                            <button type="submit">Submit</button>
+                        </form>
+                    @endisset
 					<a href="{{ route('checkout.index') }}" class="site-btn">Proceed to checkout</a>
 					<a href="" class="site-btn sb-dark">Continue shopping</a>
 				</div>

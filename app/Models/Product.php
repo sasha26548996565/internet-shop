@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->price * $this->pivot->count;
     }
+
+    public function isAvailable(): bool
+    {
+        return $this->count > 0;
+    }
 }

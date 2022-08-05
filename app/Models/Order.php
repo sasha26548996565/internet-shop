@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +23,7 @@ class Order extends Model
 
     public function promoCode(): Relation
     {
-        return $this->belognsTo(PromoCode::class, 'promo_code_id', 'id');
+        return $this->belongsTo(PromoCode::class, 'promo_code_id', 'id');
     }
 
     public function scopeGetActive(Builder $builder): Builder
@@ -51,5 +53,23 @@ class Order extends Model
         }
 
         return $quantity;
+    }
+
+    public function getTotalPriceWithPromoCode(): float
+    {
+        return $this->promoCode->applyCost($this->getTotalPrice());
+    }
+
+    public function updateProductsCount()
+    {
+        $products = collect([]);
+
+        foreach ($this->products as $product)
+        {
+            $product->count -= $product->pivot->count;
+            $products->push($product);
+        }
+
+        $products->map->save();
     }
 }

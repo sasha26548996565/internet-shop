@@ -12,11 +12,13 @@
                                 <h2>{{ $product->category->name }}</h2>
                                 <p>{{ $product->description }}</p>
                                 <a href="#" class="site-btn sb-line">DISCOVER</a>
-                                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="d-inline-block">
-                                    @csrf
+                                @if ($product->isAvailable())
+                                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="d-inline-block">
+                                        @csrf
 
-                                    <input type="submit" class="site-btn sb-white" value="ADD TO CART">
-                                </form>
+                                        <input type="submit" class="site-btn sb-white" value="ADD TO CART">
+                                    </form>
+                                @endif
                             </div>
                         </div>
                         <div class="offer-card text-white">
@@ -33,8 +35,6 @@
         </div>
     </section>
     <!-- Hero section end -->
-
-
 
     <!-- Features section -->
     <section class="features-section">

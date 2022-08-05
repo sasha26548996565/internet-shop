@@ -14,12 +14,14 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::middleware('basket_is_not_empty')->group(function () {
             Route::get('', 'CartController@index')->name('index');
             Route::post('/remove/{product}', 'CartController@remove')->name('remove');
+            Route::post('/promo-code/add', 'PromoCodeController@add')->name('promo_code.add');
         });
     });
 
     Route::middleware('basket_is_not_empty')->prefix('checkout')->name('checkout.')->group(function () {
         Route::get('/', 'CheckoutController@index')->name('index');
         Route::post('/save/{order}', 'CheckoutController@save')->name('save');
+
     });
 
     Route::middleware('auth')->prefix('like')->name('like.')->group(function () {

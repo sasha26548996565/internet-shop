@@ -11,4 +11,14 @@ class PromoCode extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function promoCodeOption(): Relation
+    {
+        return $this->hasOne(PromoCodeOptions::class, 'promo_code_id', 'id');
+    }
+
+    public function applyCost(float $price): float
+    {
+        return round($price - ($price * $this->promoCodeOption->discount / 100), 2);
+    }
 }

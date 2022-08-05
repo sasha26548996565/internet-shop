@@ -27,6 +27,7 @@ class CheckoutController extends Controller
         unset($params['shipping']);
 
         $order->update($params);
+        $order->updateProductsCount();
         session()->forget('orderId');
 
         return to_route('index');

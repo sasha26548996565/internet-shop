@@ -91,9 +91,9 @@
                             @endforeach
 						</ul>
 						<ul class="price-list">
-							<li>Total<span>{{ $order->getTotalPrice() }}</span></li>
+							<li>Total<span>{{ $order->promoCode ? $order->getTotalPriceWithPromoCode() : $order->getTotalPrice() }}$</span></li>
 							<li>Shipping<span>free</span></li>
-							<li class="total">Total<span>{{ $order->getTotalPrice() }}</span></li>
+							<li class="total">Total<span>{{ $order->promoCode ? $order->getTotalPriceWithPromoCode() : $order->getTotalPrice() }}$</span></li>
 						</ul>
 					</div>
 				</div>
