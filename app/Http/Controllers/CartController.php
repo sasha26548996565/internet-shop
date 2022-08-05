@@ -53,12 +53,6 @@ class CartController extends Controller
     public function remove(Product $product): RedirectResponse
     {
         $orderId = session('orderId');
-
-        if (is_null($orderId))
-        {
-            return redirect()->back();
-        }
-
         $order = Order::findOrFail($orderId);
 
         if ($order->products->contains($product->id))

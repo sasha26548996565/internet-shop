@@ -33,4 +33,16 @@ class Order extends Model
 
         return $price;
     }
+
+    public function getTotalQuantity(): float
+    {
+        $quantity = 0;
+
+        foreach ($this->products as $product)
+        {
+            $quantity += $product->pivot->count;
+        }
+
+        return $quantity;
+    }
 }

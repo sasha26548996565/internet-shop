@@ -50,7 +50,11 @@
                                             </div>
                                         </td>
                                         <td class="size-col">
-                                            <h4>properties does not exists!</h4>
+                                            @forelse ($product->propertyOptions as $propertyOption)
+                                                <h4>{{ $propertyOption->property->name }}: {{ $propertyOption->name }}</h4>
+                                            @empty
+                                                <h4>properties does not exists!</h4>
+                                            @endforelse
                                         </td>
                                         <td class="total-col"><h4 id="totalSum">{{ $product->getPriceForCount() }}$</h4></td>
                                     </tr>
