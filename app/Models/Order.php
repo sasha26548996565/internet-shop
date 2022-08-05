@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -21,6 +22,11 @@ class Order extends Model
     public function promoCode(): Relation
     {
         return $this->belognsTo(PromoCode::class, 'promo_code_id', 'id');
+    }
+
+    public function scopeGetActive(Builder $builder): Builder
+    {
+        return $builder->where('status', true);
     }
 
     public function getTotalPrice(): float

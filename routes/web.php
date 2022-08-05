@@ -16,6 +16,11 @@ Route::namespace('App\Http\Controllers')->group(function () {
             Route::post('/remove/{product}', 'CartController@remove')->name('remove');
         });
     });
+
+    Route::middleware('basket_is_not_empty')->prefix('checkout')->name('checkout.')->group(function () {
+        Route::get('/', 'CheckoutController@index')->name('index');
+        Route::post('/save/{order}', 'CheckoutController@save')->name('save');
+    });
 });
 
 Auth::routes();

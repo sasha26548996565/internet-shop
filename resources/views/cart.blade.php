@@ -74,7 +74,7 @@
 						<input type="text" placeholder="Enter promo code">
 						<button>Submit</button>
 					</form>
-					<a href="" class="site-btn">Proceed to checkout</a>
+					<a href="{{ route('checkout.index') }}" class="site-btn">Proceed to checkout</a>
 					<a href="" class="site-btn sb-dark">Continue shopping</a>
 				</div>
 			</div>
