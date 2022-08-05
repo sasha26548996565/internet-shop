@@ -21,44 +21,46 @@
 								</tr>
 							</thead>
 							<tbody>
-                                @foreach ($order->products as $product)
-                                    <tr>
-                                        <td class="product-col">
-                                            <img src="img/cart/1.jpg" alt="{{ $product->name }}">
-                                            <div class="pc-title">
-                                                <h4>{{ $product->name }} {{ $product->id }}</h4>
-                                                <p>{{ $product->price }} $</p>
-                                            </div>
-                                        </td>
-                                        <td class="quy-col">
-                                            <div class="quantity">
-                                                <div class="pro-qty d-flex">
-                                                    <form action="{{ route('cart.remove', $product->id) }}" method="POST">
-                                                        @csrf
-
-                                                        <input type="submit" value="-" class="dec" style="cursor: pointer;">
-                                                    </form>
-
-                                                    <input type="text" value="{{ $product->pivot->count }}" readonly>
-
-                                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                                        @csrf
-
-                                                        <input type="submit" value="+" class="inc" style="cursor: pointer;">
-                                                    </form>
+                                @isset($order)
+                                    @foreach ($order->products as $product)
+                                        <tr>
+                                            <td class="product-col">
+                                                <img src="img/cart/1.jpg" alt="{{ $product->name }}">
+                                                <div class="pc-title">
+                                                    <h4>{{ $product->name }} {{ $product->id }}</h4>
+                                                    <p>{{ $product->price }} $</p>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="size-col">
-                                            @forelse ($product->propertyOptions as $propertyOption)
-                                                <h4>{{ $propertyOption->property->name }}: {{ $propertyOption->name }}</h4>
-                                            @empty
-                                                <h4>properties does not exists!</h4>
-                                            @endforelse
-                                        </td>
-                                        <td class="total-col"><h4 id="totalSum">{{ $product->getPriceForCount() }}$</h4></td>
-                                    </tr>
-                                @endforeach
+                                            </td>
+                                            <td class="quy-col">
+                                                <div class="quantity">
+                                                    <div class="pro-qty d-flex">
+                                                        <form action="{{ route('cart.remove', $product->id) }}" method="POST">
+                                                            @csrf
+
+                                                            <input type="submit" value="-" class="dec" style="cursor: pointer;">
+                                                        </form>
+
+                                                        <input type="text" value="{{ $product->pivot->count }}" readonly>
+
+                                                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                                            @csrf
+
+                                                            <input type="submit" value="+" class="inc" style="cursor: pointer;">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="size-col">
+                                                @forelse ($product->propertyOptions as $propertyOption)
+                                                    <h4>{{ $propertyOption->property->name }}: {{ $propertyOption->name }}</h4>
+                                                @empty
+                                                    <h4>properties does not exists!</h4>
+                                                @endforelse
+                                            </td>
+                                            <td class="total-col"><h4 id="totalSum">{{ $product->getPriceForCount() }}$</h4></td>
+                                        </tr>
+                                    @endforeach
+                                @endisset
 							</tbody>
 						</table>
 						</div>

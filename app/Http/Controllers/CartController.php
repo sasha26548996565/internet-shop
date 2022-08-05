@@ -5,23 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\CartService;
 use Illuminate\Contracts\View\View;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\RedirectResponse;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller
 {
+    private CartService $basketService;
+
+    public function __construct(CartService $basketService)
+    {
+        $this->basketService = $basketService;
+    }
+
     public function index(): View
     {
         $orderId = session('orderId');
 
-        if (!is_null($orderId))
+        if (! is_null($orderId))
         {
             $order = Order::findOrFail($orderId);
+
+            return view('cart', compact('order'));
         }
 
-        return view('cart', compact('order'));
+        return view('cart');
     }
 
     public function add(Product $product): RedirectResponse
@@ -37,15 +47,7 @@ class CartController extends Controller
             $order = Order::findOrFail($orderId);
         }
 
-        if ($order->products->contains($product->id))
-        {
-            $pivotRow = $order->products()->where('product_id', $product->id)->first()->pivot;
-            $pivotRow->count++;
-            $pivotRow->update();
-        } else
-        {
-            $order->products()->attach($product->id);
-        }
+        $this->basketService->add($order, $product);
 
         return to_route('cart.index', $order);
     }
@@ -55,19 +57,7 @@ class CartController extends Controller
         $orderId = session('orderId');
         $order = Order::findOrFail($orderId);
 
-        if ($order->products->contains($product->id))
-        {
-            $pivotRow = $order->products()->where('product_id', $product->id)->first()->pivot;
-
-            if ($pivotRow->count <= 1)
-            {
-                $order->products()->detach($product->id);
-            } else
-            {
-                $pivotRow->count--;
-                $pivotRow->update();
-            }
-        }
+        $this->basketService->remove($order, $product);
 
         return to_route('cart.index', $order);
     }

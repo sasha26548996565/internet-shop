@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class BasketMiddleware
@@ -16,9 +17,17 @@ class BasketMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (is_null(session('orderId')))
+        $orderId = session('orderId');
+
+        if (is_null($orderId))
+            return to_route('index');
+
+        $order = Order::findOrFail($orderId);
+
+        if ($order->getTotalQuantity($order->products) <= 0)
         {
-            return redirect()->back();
+            session()->forget('orderId');
+            return to_route('index');
         }
 
         return $next($request);
