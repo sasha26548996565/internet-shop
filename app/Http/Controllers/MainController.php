@@ -8,14 +8,27 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 class MainController extends Controller
 {
-    public function index(): View
+    public function index(Request $request)
     {
         $newProducts = Product::with('category')->latest()->take(2)->get();
         $categories = Category::latest()->get();
-        $latestProducts = Product::with('category')->latest()->take(5)->get();
+        $latestProducts = Product::with('category')->orderBy('id', 'DESC')->paginate(4);
+
+        if ($request->ajax())
+        {
+            $html = '';
+
+            foreach ($latestProducts as $product)
+            {
+                $html = view('card_product', ['product' => $product])->render();
+            }
+
+            return $html;
+        }
 
         return view('index', compact('newProducts', 'latestProducts', 'categories'));
     }

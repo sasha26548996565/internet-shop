@@ -1,5 +1,46 @@
 @extends('layouts.master')
 
+@section('custom_js')
+<script type="text/javascript">
+    var paginate = 1;
+    loadMoreData(paginate);
+
+    $('#load-more').click(function() {
+        var page = $(this).data('paginate');
+        loadMoreData(page);
+        $(this).data('paginate', page+1);
+    });
+
+    function loadMoreData(paginate)
+    {
+        $.ajax({
+            url: '?page=' + paginate,
+            type: 'get',
+            datatype: 'html',
+            beforeSend: function() {
+                $('#load-more').text('Loading...');
+            }
+        })
+        .done(function(data) {
+            if(data == "")
+            {
+                $('.invisible').removeClass('invisible');
+                $('#load-more').hide();
+
+                return;
+            } else
+            {
+                $('#load-more').text('Load more...');
+                $('#products').append(data);
+            }
+        })
+        .fail(function(jqXHR, ajaxOptions, thrownError) {
+            alert('Something went wrong.');
+        });
+    }
+</script>
+@endsection
+
 @section('content')
     <section class="hero-section">
         <div class="hero-slider owl-carousel">
@@ -100,13 +141,14 @@
             </ul>
             <div class="row">
                 @foreach ($latestProducts as $product)
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-3 col-sm-6" id="products">
                         @include('card_product', $product)
                     </div>
                 @endforeach
             </div>
             <div class="text-center pt-5">
-                <button class="site-btn sb-line sb-dark">LOAD MORE</button>
+                <button class="site-btn sb-line sb-dark" id="load-more" data-paginate="2">Load more...</button>
+                <p class="invisible">No more posts...</p>
             </div>
         </div>
     </section>
