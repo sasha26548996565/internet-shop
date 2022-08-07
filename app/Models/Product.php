@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -35,5 +36,15 @@ class Product extends Model
     public function isAvailable(): bool
     {
         return $this->count > 0;
+    }
+
+    public function scopeGetNew(Builder $builder): Builder
+    {
+        return $builder->where('new', true);
+    }
+
+    public function scopeGetOnSale(Builder $builder): Builder
+    {
+        return $builder->where('on_sale', true);
     }
 }

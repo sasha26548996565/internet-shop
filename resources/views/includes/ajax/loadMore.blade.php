@@ -1,7 +1,7 @@
 <script type="text/javascript">
     let paginate = 1;
 
-    jQuery('#load-more').click(() =>  {
+    jQuery('#load-more').click(function()  {
         let page = jQuery(this).data('paginate');
         loadMoreData(page);
         jQuery(this).data('paginate', page+1);
@@ -13,11 +13,11 @@
             url: '?page=' + paginate,
             type: 'GET',
             datatype: 'HTML',
-            beforeSend: () => {
+            beforeSend: function() {
                 jQuery('#load-more').text('Loading...');
             }
         })
-        .done((data) => {
+        .done(function(data) {
             if(data == "")
             {
                 jQuery('.invisible').removeClass('invisible');
@@ -30,7 +30,7 @@
                 jQuery('#products').append(data);
             }
         })
-        .fail((jqXHR, ajaxOptions, thrownError) => {
+        .fail(function(jqXHR, ajaxOptions, thrownError) {
             alert('Something went wrong.');
         });
     }

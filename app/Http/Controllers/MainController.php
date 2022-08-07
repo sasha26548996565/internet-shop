@@ -6,16 +6,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Services\LoadMoreService;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
 class MainController extends Controller
 {
+    private LoadMoreService $loadMoreService;
+
+    public function __construct(LoadMoreService $loadMoreService)
+    {
+        $this->loadMoreService = $loadMoreService;
+    }
+
     public function index(Request $request)
     {
-        $newProducts = Product::with('category')->latest()->take(2)->get();
-        $categories = Category::latest()->get();
         $latestProducts = Product::with('category')->orderBy('id', 'DESC')->paginate(4);
 
         if ($request->ajax())
@@ -30,7 +36,7 @@ class MainController extends Controller
             return $html;
         }
 
-        return view('index', compact('newProducts', 'latestProducts', 'categories'));
+        return view('index', compact('latestProducts'));
     }
 
     public function category(string $categorySlug): View
