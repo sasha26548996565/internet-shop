@@ -73,24 +73,6 @@
     </section>
     <!-- Features section end -->
 
-
-    <!-- letest product section -->
-    <section class="top-letest-product-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>LATEST PRODUCTS</h2>
-            </div>
-            <div class="product-slider owl-carousel">
-                @foreach ($latestProducts as $product)
-                    @include('card_product', $product)
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <!-- letest product section end -->
-
-
-
     <!-- Product filter section -->
     <section class="product-filter-section">
         <div class="container">
@@ -103,7 +85,7 @@
                 @endforeach
             </ul>
             <div class="row">
-                @foreach ($latestProducts as $product)
+                @foreach ($products as $product)
                     <div class="col-lg-3 col-sm-6" id="products">
                         @include('card_product', $product)
                     </div>
