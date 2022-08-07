@@ -23,11 +23,14 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::middleware('basket_is_not_empty')->prefix('checkout')->name('checkout.')->group(function () {
         Route::get('/', 'CheckoutController@index')->name('index');
         Route::post('/save/{order}', 'CheckoutController@save')->name('save');
-
     });
 
     Route::middleware('auth')->prefix('like')->name('like.')->group(function () {
         Route::post('/add/{user}/{product}', 'LikeController@add')->name('add');
+    });
+
+    Route::middleware(['auth', 'role:admin'])->namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', 'MainController@index')->name('index');
     });
 });
 

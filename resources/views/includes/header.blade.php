@@ -26,7 +26,11 @@
                                 <form action="{{ route('logout') }}" method="POST" style="display: inline-block;">
                                     @csrf
 
-                                    <input type="submit" class="btn btn-link link-dark" style="text-decoration: none;" value="logout">
+                                    @role('admin')
+                                        <a href="{{ route('admin.index') }}" class="btn btn-link"
+                                            style="text-decoration: none;color: #000;">admin</a>
+                                    @endrole
+                                    <input type="submit" class="btn btn-link" style="text-decoration: none; color: #000;" value="logout">
                                 </form>
                             @endauth
                         </div>
