@@ -2,36 +2,35 @@
 
 @section('custom_js')
 <script type="text/javascript">
-    var paginate = 1;
-    loadMoreData(paginate);
+    let paginate = 1;
 
-    $('#load-more').click(function() {
-        var page = $(this).data('paginate');
+    jQuery('#load-more').click(function() {
+        let page = jQuery(this).data('paginate');
         loadMoreData(page);
         $(this).data('paginate', page+1);
     });
 
     function loadMoreData(paginate)
     {
-        $.ajax({
+        jQuery.ajax({
             url: '?page=' + paginate,
             type: 'get',
             datatype: 'html',
             beforeSend: function() {
-                $('#load-more').text('Loading...');
+                jQuery('#load-more').text('Loading...');
             }
         })
         .done(function(data) {
             if(data == "")
             {
-                $('.invisible').removeClass('invisible');
-                $('#load-more').hide();
+                jQuery('.invisible').removeClass('invisible');
+                jQuery('#load-more').hide();
 
                 return;
             } else
             {
-                $('#load-more').text('Load more...');
-                $('#products').append(data);
+                jQuery('#load-more').text('Load more...');
+                jQuery('#products').append(data);
             }
         })
         .fail(function(jqXHR, ajaxOptions, thrownError) {
@@ -148,7 +147,7 @@
             </div>
             <div class="text-center pt-5">
                 <button class="site-btn sb-line sb-dark" id="load-more" data-paginate="2">Load more...</button>
-                <p class="invisible">No more posts...</p>
+                <p class="invisible">No more products...</p>
             </div>
         </div>
     </section>
