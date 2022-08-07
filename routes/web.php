@@ -8,6 +8,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/category/{categorySlug}', 'MainController@category')->name('category');
     Route::get('/product/{productSlug}', 'MainController@product')->name('product');
 
+    Route::get('/search', 'SearchController')->name('search');
+
     Route::name('cart.')->prefix('cart')->group(function () {
         Route::post('/add/{product}', 'CartController@add')->name('add');
 
