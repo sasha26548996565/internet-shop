@@ -26,12 +26,7 @@ class MainController extends Controller
 
         if ($request->ajax())
         {
-            $html = '';
-
-            foreach ($latestProducts as $product)
-            {
-                $html = view('card_product', ['product' => $product])->render();
-            }
+            $html = $this->loadMoreService->generateHtml($latestProducts);
 
             return $html;
         }
