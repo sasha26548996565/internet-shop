@@ -31,6 +31,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
     Route::middleware(['auth', 'role:admin'])->namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', 'MainController@index')->name('index');
+
+        Route::resource('user', 'UserController');
+        Route::get('/orders', 'OrderController@index')->name('order.index');
     });
 });
 
