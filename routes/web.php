@@ -37,6 +37,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
         Route::resource('property', 'PropertyController');
         Route::resource('property/{property}/propertyOption', 'PropertyOptionController');
+        Route::resource('product', 'ProductController');
     });
 });
 

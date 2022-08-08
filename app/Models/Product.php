@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +28,41 @@ class Product extends Model
     public function propertyOptions(): Relation
     {
         return $this->belongsToMany(PropertyOption::class, 'product_property_option', 'product_id', 'property_option_id')->withTimestamps();
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($property) {
+            $property->slug = Str::slug($property->name);
+        });
+
+        static::updating(function ($property) {
+            $property->slug = Str::slug($property->name);
+        });
+    }
+
+    public function getLabels(): array
+    {
+        return [
+            'new', 'on_sale'
+        ];
+    }
+
+    public function enableLabel(string $label): void
+    {
+        $this->$label = 1;
+    }
+
+    public function disableLabel(string $label): void
+    {
+        $this->$label = 0;
+    }
+
+    public function scopeSlug(Builder $builder, string $slug): Builder
+    {
+        return $builder->where('slug', $slug);
     }
 
     public function getPriceForCount(): float

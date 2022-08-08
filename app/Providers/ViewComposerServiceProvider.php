@@ -9,6 +9,7 @@ use App\ViewComposers\CategoriesComposer;
 use App\ViewComposers\NewProductsComposer;
 use App\ViewComposers\PermissionsComposer;
 use App\ViewComposers\CountProductsInOrderComposer;
+use App\ViewComposers\PropertiesComposer;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
@@ -20,5 +21,7 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer('includes.categories', CategoriesComposer::class);
         View::composer('admin.user.*', RolesComposer::class);
         View::composer('admin.user.*', PermissionsComposer::class);
+        View::composer('admin.product.form', CategoriesComposer::class);
+        View::composer('admin.product.form', PropertiesComposer::class);
     }
 }

@@ -8,7 +8,7 @@
             <div class="tag-new">NEW</div>
         @endif
 
-        <img src="{{ asset('img/product/1.jpg') }}" alt="{{ $product->name }}">
+        <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
         <div class="pi-links d-flex justify-content-around">
             @if ($product->isAvailable())
                 <form action="{{ route('cart.add', $product->id) }}" method="POST">
