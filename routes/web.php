@@ -29,7 +29,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::post('/add/{user}/{product}', 'LikeController@add')->name('add');
     });
 
-    Route::middleware(['auth', 'role:admin'])->namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['auth', 'role:admin', 'verified'])->namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', 'MainController@index')->name('index');
 
         Route::resource('user', 'UserController');
@@ -40,6 +40,6 @@ Route::namespace('App\Http\Controllers')->group(function () {
     });
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
