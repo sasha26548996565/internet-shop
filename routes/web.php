@@ -34,6 +34,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
         Route::resource('user', 'UserController');
         Route::get('/orders', 'OrderController@index')->name('order.index');
+
+        Route::resource('property', 'PropertyController');
     });
 });
 
