@@ -12,6 +12,13 @@ class ProductService
     public function store(array $params): Product
     {
         $params['image'] = Storage::disk('public')->put('/products', $params['image']);
+
+        if (isset($params['property_ids']))
+        {
+            $propertyIds = $params['property_ids'];
+            unset($params['property_ids']);
+        }
+
         $product = Product::create($params);
         isset($propertyIds) ? $product->properties()->attach($propertyIds) : null;
 
