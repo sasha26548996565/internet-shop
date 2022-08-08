@@ -29,7 +29,7 @@
                                     >Открыть</a>
                                 <a class="btn btn-warning" type="button" href="{{ route('admin.property.edit', $property->slug) }}"
                                     >Редактировать</a>
-                                <a class="btn btn-primary" type="button" href=""
+                                <a class="btn btn-primary" type="button" href="{{ route('admin.propertyOption.index', $property->slug) }}"
                                         >Варианты свойств</a>
                                 @csrf
                                 @method('DELETE')
