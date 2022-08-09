@@ -35,6 +35,15 @@
                 </div>
                 <br>
                 <div class="input-group row">
+                    <label for="count" class="col-sm-2 col-form-label">Количество: </label>
+                    <div class="col-sm-6">
+                        @include('includes.error', ['fieldName' => 'count'])
+                        <input type="number" class="form-control" name="count" id="count"
+                               value="@isset($product){{ $product->count }}@endisset">
+                    </div>
+                </div>
+                <br>
+                <div class="input-group row">
                     <label for="name" class="col-sm-2 col-form-label">Название: </label>
                     <div class="col-sm-6">
                         @include('includes.error', ['fieldName' => 'name'])

@@ -25,7 +25,8 @@ class UpdateRequest extends FormRequest
             'new' => '',
             'on_sale' => '',
             'description' => 'required',
-            'property_option_ids' => ''
+            'property_option_ids' => '',
+            'count' => 'required|integer'
         ];
     }
 }

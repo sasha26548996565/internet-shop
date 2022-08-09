@@ -1,12 +1,10 @@
 <div class="product-item">
     <div class="pi-pic">
-        @if ($product->on_sale)
-            <div class="tag-sale">ON SALE</div>
-        @endif
-
-        @if ($product->new)
-            <div class="tag-new">NEW</div>
-        @endif
+        @foreach ($product->getLabels() as $label)
+            @if ($product->$label)
+                <span class="tag tag-sale">{{ Str::upper($label) }}</span>
+            @endif
+        @endforeach
 
         <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
         <div class="pi-links d-flex justify-content-around">

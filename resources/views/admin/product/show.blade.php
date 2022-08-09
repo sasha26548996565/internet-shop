@@ -24,6 +24,10 @@
                 <td>{{ $product->price }}</td>
             </tr>
             <tr>
+                <td>Количество</td>
+                <td>{{ $product->count }}</td>
+            </tr>
+            <tr>
                 <td>Название</td>
                 <td>{{ $product->name }}</td>
             </tr>
@@ -38,13 +42,11 @@
             <tr>
                 <td>Лейблы</td>
                 <td>
-                    @if ($product->new)
-                        <span class="badge badge-success">NEW</span>
-                    @endif
-
-                    @if ($product->on_sale)
-                        <span class="badge badge-success">ON SALE</span>
-                    @endif
+                    @foreach ($product->getLabels() as $label)
+                        @if ($product->$label)
+                            <span class="badge badge-success">{{ Str::upper($label) }}</span>
+                        @endif
+                    @endforeach
                 </td>
             </tr>
             </tbody>

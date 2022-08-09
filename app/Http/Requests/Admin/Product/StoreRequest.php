@@ -21,7 +21,8 @@ class StoreRequest extends FormRequest
             'image' => 'required',
             'new' => '',
             'on_sale' => '',
-            'description' => 'required'
+            'description' => 'required',
+            'count' => 'required|integer'
         ];
     }
 }
