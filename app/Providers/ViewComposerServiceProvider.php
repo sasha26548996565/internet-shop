@@ -10,6 +10,7 @@ use App\ViewComposers\NewProductsComposer;
 use App\ViewComposers\PermissionsComposer;
 use App\ViewComposers\CountProductsInOrderComposer;
 use App\ViewComposers\PropertiesComposer;
+use App\ViewComposers\PropertyOptionsComposer;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer('includes.navbar', CategoriesComposer::class);
         View::composer('includes.sliderNewProducts', NewProductsComposer::class);
         View::composer('includes.categories', CategoriesComposer::class);
+        View::composer('category', PropertyOptionsComposer::class);
+        View::composer('category', PropertiesComposer::class);
         View::composer('admin.user.*', RolesComposer::class);
         View::composer('admin.user.*', PermissionsComposer::class);
         View::composer('admin.product.form', CategoriesComposer::class);

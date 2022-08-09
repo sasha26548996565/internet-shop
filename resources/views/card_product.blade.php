@@ -6,7 +6,7 @@
             @endif
         @endforeach
 
-        <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
+        <img src="{{ Storage::url($product->image) }}" height="350" alt="{{ $product->name }}">
         <div class="pi-links d-flex justify-content-around">
             @if ($product->isAvailable())
                 <form action="{{ route('cart.add', $product->id) }}" method="POST">
