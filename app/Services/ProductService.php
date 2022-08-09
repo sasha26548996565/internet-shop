@@ -28,7 +28,10 @@ class ProductService
     public function update(array $params, Product $product): void
     {
         if (isset($params['image']))
+        {
+            Storage::delete($params['image']);
             $params['image'] = Storage::disk('public')->put('/products', $params['image']);
+        }
 
         if (isset($params['property_ids']))
         {
