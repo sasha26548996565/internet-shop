@@ -22,26 +22,26 @@ class ProductFilter extends AbstractFilter
         ];
     }
 
-    public function color(Builder $builder, $value)
+    public function color(Builder $builder, $value): void
     {
         $builder->whereHas('propertyOptions', function (Builder $query) use($value) {
             $query->where('name', key($value));
         });
     }
 
-    public function size(Builder $builder, $value)
+    public function size(Builder $builder, $value): void
     {
         $builder->whereHas('propertyOptions', function (Builder $query) use($value) {
             $query->where('name', key($value));
         });
     }
 
-    public function priceFrom(Builder $builder, $value)
+    public function priceFrom(Builder $builder, $value): void
     {
         $builder->where('price', '>=', $value);
     }
 
-    public function priceTo(Builder $builder, $value)
+    public function priceTo(Builder $builder, $value): void
     {
         $builder->where('price', '<=', $value);
     }
