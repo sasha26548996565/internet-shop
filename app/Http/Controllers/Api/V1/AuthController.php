@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Api\User\StoreRequest;
 use App\Http\Requests\Api\User\UpdateRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -20,7 +21,7 @@ class AuthController extends Controller
         $user = User::create($params);
         $user->assignRole(User::ROLE_USER);
 
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function login(UpdateRequest $request)
